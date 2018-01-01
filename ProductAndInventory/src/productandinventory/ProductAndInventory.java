@@ -9,6 +9,8 @@ import Inventory.InventoryItems;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import productandinventory.product.Product;
+import productandinventory.userInterface.TextUserInterface;
+import productandinventory.userInterface.textUserInterface;
 
 /**
  *
@@ -21,13 +23,8 @@ public class ProductAndInventory {
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
-        InventoryItems test = new InventoryItems();
-        test.addProductToInventory(new Product(1, 2.50, "taco", "lovely tacos"));
-        test.addProductToInventory(new Product(2, 3.50, "pizza", "lovely pizza"));
-        test.addProductToInventory(new Product(3, 4.50, "burger", "lovely burger"));
-        test.printInventory();
-        test.saveInventory();
-        // ObjectMapper mapper = new ObjectMapper();
+    	TextUserInterface textInterface = new TextUserInterface();
+    	textInterface.start();
     }
     
 }
