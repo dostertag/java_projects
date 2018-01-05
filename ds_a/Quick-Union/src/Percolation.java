@@ -3,7 +3,9 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
 	
-	private WeightedQuickUnionUF unionFindOne;
+//	private WeightedQuickUnionUF ufBottom;
+//	private WeightedQuickUnionUF ufTop;
+	private WeightedQuickUnionUF findIt;
 	private int virtualTop;
 	private int virtualBottom;
 	private boolean[][] openedSites;
@@ -20,7 +22,9 @@ public class Percolation {
 		virtualTop = n * n;
 		virtualBottom = n * n + 1;
 		length = n;
-		unionFindOne = new WeightedQuickUnionUF(n * n + 2);
+		findIt = new WeightedQuickUnionUF(n * n + 2);
+		// ufBottom = new WeightedQuickUnionUF(n * n + 2);
+		// ufTop = new WeightedQuickUnionUF(n * n + 1);
 		numOpenSites = 0;
 		
 	}
@@ -30,6 +34,17 @@ public class Percolation {
 		if (isInBounds(row, column)) {
 			openedSites[row - 1][column - 1] = true;
 			numOpenSites++;
+			if (row == this.length) {
+				findIt.union((row - 1) * length + column - 1, virtualBottom);
+			}
+			if (row == 1) {
+				findIt.union(row - 1, virtualTop);
+			}
+			if (row > 1 && isOpen()) {
+				
+			}
+		} else {
+			throw new IndexOutOfBoundsException();
 		}
 		
 	}
@@ -59,7 +74,7 @@ public class Percolation {
 	
 	public boolean percolates() {
 		// does the system percolate?
-		return unionFindOne.connected(virtualTop, virtualBottom);
+		return findIt.connected(virtualTop, virtualBottom);
 	}
 	
 	private boolean isInBounds(int i, int j) {
