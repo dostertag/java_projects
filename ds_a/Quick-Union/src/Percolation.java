@@ -8,6 +8,7 @@ public class Percolation {
 	private int virtualBottom;
 	private boolean[][] openedSites;
 	private int length;
+	private int numOpenSites;
 	
 	
 	public Percolation(int n) {
@@ -20,7 +21,7 @@ public class Percolation {
 		virtualBottom = n * n + 1;
 		length = n;
 		unionFindOne = new WeightedQuickUnionUF(n * n + 2);
-		
+		numOpenSites = 0;
 		
 	}
 	
@@ -28,6 +29,7 @@ public class Percolation {
 		// open site -row, col- if it isn't open already
 		if (isInBounds(row, column)) {
 			openedSites[row - 1][column - 1] = true;
+			numOpenSites++;
 		}
 		
 	}
@@ -43,16 +45,21 @@ public class Percolation {
 	
 	public boolean isFull(int row, int col) {
 		// is site -row, col- blocked?
+		if (isInBounds(row, col)) {
+			return !openedSites[row - 1][col - 1];
+		}
+		throw new IndexOutOfBoundsException();
 		
 	}
 	
 	public Integer numberOfOpenSites() {
 		// number of open sites
+		return numOpenSites;
 	}
 	
 	public boolean percolates() {
 		// does the system percolate?
-		return unionFineOne.connected(virtualTop, virtualBottom);
+		return unionFindOne.connected(virtualTop, virtualBottom);
 	}
 	
 	private boolean isInBounds(int i, int j) {
