@@ -62,7 +62,9 @@ public class Percolation {
 			if (column > 1 && isOpen(row, column - 1)) {
 				findIt.union((row - 1) * length + column - 1, (row - 1) * length + column - 1);
 			}
-			if (column < length && isOpen())
+			if (column < length && isOpen(row, column + 1)) {
+				findIt.union((row - 1) * length + column - 1, (row - 1) * length + column);
+			}
 		} else {
 			throw new IndexOutOfBoundsException();
 		}
