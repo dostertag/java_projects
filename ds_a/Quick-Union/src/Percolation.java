@@ -27,6 +27,19 @@ public class Percolation {
 		// ufTop = new WeightedQuickUnionUF(n * n + 1);
 		numOpenSites = 0;
 		
+		/*
+		 * 	to visualize the grid as a single array - it's like so in a 4x4 scenario:
+		 *    [ 0, 1, 2, 3,
+		 * 		4, 5, 6, 7,
+		 * 		8, 9, 10, 11,
+		 * 		12, 13, 14, 15, 
+		 * 
+		 * 		16 = virtual top
+		 * 		17 = virtual bottom ]
+		 *  so, to union ( row 2, column 2 ) would need to call 
+		 *  union(5, 1) 
+		 */
+		
 	}
 	
 	public void open(int row, int column) {
@@ -40,9 +53,16 @@ public class Percolation {
 			if (row == 1) {
 				findIt.union(row - 1, virtualTop);
 			}
-			if (row > 1 && isOpen()) {
-				
+			if (row > 1 && isOpen(row - 1, column)) {
+				findIt.union((row - 1) * length + column - 1, (row - 2) * length + column - 1);
 			}
+			if (row < length && isOpen(row + 1, column)) {
+				findIt.union((row -1) * length + column - 1, row * length + column - 1);
+			}
+			if (column > 1 && isOpen(row, column - 1)) {
+				findIt.union((row - 1) * length + column - 1, (row - 1) * length + column - 1);
+			}
+			if (column < length && isOpen())
 		} else {
 			throw new IndexOutOfBoundsException();
 		}
